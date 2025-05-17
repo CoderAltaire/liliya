@@ -161,61 +161,70 @@ class _BookReadingViewState extends State<BookReadingView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.asset(
-                      widget.imgPath,
-                      width: 120,
-                      height: 180,
-                      fit: BoxFit.cover,
-                      errorBuilder:
-                          (context, error, stackTrace) => Container(
-                            width: 120,
-                            height: 180,
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    widget.imgPath,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    height: MediaQuery.of(context).size.width * 0.7,
+                    fit: BoxFit.cover,
+                    errorBuilder:
+                        (context, error, stackTrace) => Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          height: MediaQuery.of(context).size.width * 0.7,
+                          decoration: BoxDecoration(
                             color: Colors.grey[300],
-                            child: const Icon(Icons.error),
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                    ),
+                          child: Icon(
+                            Icons.image_not_supported,
+                            size: 50,
+                            color: Colors.grey[600],
+                          ),
+                        ),
                   ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BookDetailRow(
-                          label: "Author",
-                          value: widget.creator,
-                          isDark: isDark,
-                        ),
-                        const SizedBox(height: 8),
-                        BookDetailRow(
-                          label: "Publication",
-                          value: widget.publicator,
-                          isDark: isDark,
-                        ),
-                        const SizedBox(height: 8),
-                        BookDetailRow(
-                          label: "Language",
-                          value: widget.language,
-                          isDark: isDark,
-                        ),
-                        const SizedBox(height: 8),
-                        BookDetailRow(
-                          label: "ISBN",
-                          value: widget.ISBN,
-                          isDark: isDark,
-                        ),
-                      ],
+                ),
+              ),
+              const SizedBox(height: 25),
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: isDark ? Colors.grey[900] : Colors.grey[100],
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BookDetailRow(
+                      label: "Author",
+                      value: widget.creator,
+                      isDark: isDark,
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 12),
+                    BookDetailRow(
+                      label: "Publication",
+                      value: widget.publicator,
+                      isDark: isDark,
+                    ),
+                    const SizedBox(height: 12),
+                    BookDetailRow(
+                      label: "Language",
+                      value: widget.language,
+                      isDark: isDark,
+                    ),
+                    const SizedBox(height: 12),
+                    BookDetailRow(
+                      label: "ISBN",
+                      value: widget.ISBN,
+                      isDark: isDark,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   color: isDark ? Colors.grey[900] : Colors.grey[100],
                   borderRadius: BorderRadius.circular(15),
@@ -228,19 +237,19 @@ class _BookReadingViewState extends State<BookReadingView> {
                       value: widget.category,
                       isDark: isDark,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     BookDetailRow(
                       label: "Date",
                       value: widget.date,
                       isDark: isDark,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     BookDetailRow(
                       label: "Format",
                       value: widget.format,
                       isDark: isDark,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     BookDetailRow(
                       label: "Subject",
                       value: widget.subject,
@@ -296,20 +305,25 @@ class BookDetailRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "$label: ",
-          style: TextStyle(
-            color: isDark ? Colors.white : TColor.text,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+        SizedBox(
+          width: 100,
+          child: Text(
+            "$label:",
+            style: TextStyle(
+              color: isDark ? Colors.white60 : Colors.grey[700],
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
         Expanded(
           child: Text(
             value,
             style: TextStyle(
-              color: isDark ? Colors.white70 : TColor.text.withOpacity(0.8),
-              fontSize: 16,
+              color: isDark ? Colors.white : TColor.text,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              height: 1.3,
             ),
           ),
         ),
