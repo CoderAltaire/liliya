@@ -1,6 +1,7 @@
-import 'package:liliya/common/color_extenstion.dart';
-import 'package:liliya/view/onboarding/welcome_view.dart';
+import 'package:com.example.liliya/view/onboarding/welcome_view.dart';
 import 'package:flutter/material.dart';
+
+import '../../common/color_extenstion.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});

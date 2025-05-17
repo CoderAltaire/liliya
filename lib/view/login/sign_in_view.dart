@@ -1,9 +1,10 @@
-import 'package:liliya/common/color_extenstion.dart';
-import 'package:liliya/view/login/forgot_password_view.dart';
+import 'package:com.example.liliya/firebase_service/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/color_extenstion.dart';
 import '../../common_widget/round_button.dart';
 import '../../common_widget/round_textfield.dart';
+import 'forgot_password_view.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({super.key});
@@ -22,104 +23,142 @@ class _SignInViewState extends State<SignInView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: TColor.primary,
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Sign In",
-                style: TextStyle(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back_ios, color: TColor.primary),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  "Welcome Back",
+                  style: TextStyle(
                     color: TColor.text,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              RoundTextField(
-                controller: txtCode,
-                hintText: "Optional Group Special Code",
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              RoundTextField(
-                controller: txtEmail,
-                hintText: "Email Address",
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              RoundTextField(
-                controller: txtPassword,
-                hintText: "Password",
-                obscureText: true,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-
-                        
-                        isStay = !isStay;
-                      });
-                    },
-                    icon: Icon(
-                      isStay ? Icons.check_box : Icons.check_box_outline_blank,
-                      color: isStay
-                          ? TColor.primary
-                          : TColor.subTitle.withOpacity(0.3),
-                    ),
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
                   ),
-                  Text(
-                    "Stay Logged In",
-                    style: TextStyle(
-                      color: TColor.subTitle.withOpacity(0.3),
-                      fontSize: 15,
-                    ),
-                  ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () {
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordView()  ) );
-                    },
-                    child: Text(
-                      "Forgot Your Password?",
-                      style: TextStyle(
-                        color: TColor.subTitle.withOpacity(0.3),
-                        fontSize: 15,
+                ),
+                Text(
+                  "Sign in to continue",
+                  style: TextStyle(color: TColor.subTitle, fontSize: 16),
+                ),
+                const SizedBox(height: 40),
+                RoundTextField(
+                  controller: txtCode,
+                  hintText: "Optional Group Special Code",
+                  icon: Icons.group_outlined,
+                ),
+                const SizedBox(height: 20),
+                RoundTextField(
+                  controller: txtEmail,
+                  hintText: "Email Address",
+                  keyboardType: TextInputType.emailAddress,
+                  icon: Icons.email_outlined,
+                ),
+                const SizedBox(height: 20),
+                RoundTextField(
+                  controller: txtPassword,
+                  hintText: "Password",
+                  obscureText: true,
+                  icon: Icons.lock_outline,
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isStay = !isStay;
+                        });
+                      },
+                      icon: Icon(
+                        isStay
+                            ? Icons.check_box
+                            : Icons.check_box_outline_blank,
+                        color:
+                            isStay
+                                ? TColor.primary
+                                : TColor.subTitle.withOpacity(0.3),
                       ),
                     ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              RoundLineButton(
-                title: "Sign In",
-                onPressed: () {},
-              )
-            ],
+                    Text(
+                      "Stay Logged In",
+                      style: TextStyle(color: TColor.subTitle, fontSize: 14),
+                    ),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ForgotPasswordView(),
+                          ),
+                        );
+                      },
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ForgotPasswordView(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Forgot Password?",
+                          style: TextStyle(
+                            color: TColor.primary,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                RoundLineButton(
+                  title: "Sign In",
+                  onPressed: () {
+                    AuthService.instance.signInUser(
+                      context,
+                      txtEmail.text,
+                      txtPassword.text,
+                    );
+                  },
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account? ",
+                      style: TextStyle(color: TColor.subTitle, fontSize: 14),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          color: TColor.primary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1050142101360",
+    "project_id": "books-a28ba",
+    "storage_bucket": "books-a28ba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050142101360:android:21643d2cfd6d2ea39349b5",
+        "android_client_info": {
+          "package_name": "com.example.liliya"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMvzgPT8Y8WAUaWkH95ZbSW5lkG7N3oYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

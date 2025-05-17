@@ -4,8 +4,46 @@ import 'package:flutter/services.dart';
 import '../../common/color_extenstion.dart';
 
 class BookReadingView extends StatefulWidget {
-  final Map bObj;
-  const BookReadingView({super.key, required this.bObj});
+  final String title;
+  final String creator;
+  final String publicator;
+  final String language;
+  final String ISBN;
+  final String Country;
+  final String description;
+  final String imgPath;
+  final String category;
+  final String category_id;
+  final String id;
+  final String contributor;
+  final String coverage;
+  final String date;
+  final String format;
+  final String relation;
+  final String subject;
+  final String type;
+
+  const BookReadingView({
+    super.key,
+    required this.title,
+    required this.creator,
+    required this.publicator,
+    required this.language,
+    required this.ISBN,
+    required this.Country,
+    required this.description,
+    required this.imgPath,
+    required this.category,
+    required this.category_id,
+    required this.id,
+    required this.contributor,
+    required this.coverage,
+    required this.date,
+    required this.format,
+    required this.relation,
+    required this.subject,
+    required this.type,
+  });
 
   @override
   State<BookReadingView> createState() => _BookReadingViewState();
@@ -23,12 +61,12 @@ class _BookReadingViewState extends State<BookReadingView> {
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
             SliverAppBar(
-              pinned: false,
+              pinned: true,
               floating: false,
-              backgroundColor: Colors.transparent,
+              backgroundColor: isDark ? Colors.black : Colors.white,
               elevation: 0,
               title: Text(
-                widget.bObj["name"].toString(),
+                widget.title,
                 style: TextStyle(
                   color: isDark ? Colors.white : TColor.text,
                   fontSize: 20,
@@ -54,15 +92,13 @@ class _BookReadingViewState extends State<BookReadingView> {
                         });
                       },
                     ),
-
                     Text(
-                      "Dark ",
+                      "Dark",
                       style: TextStyle(
                         color: isDark ? Colors.white : TColor.text,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     IconButton(
                       onPressed: () {
                         showModalBottomSheet(
@@ -71,193 +107,40 @@ class _BookReadingViewState extends State<BookReadingView> {
                           elevation: 0,
                           isScrollControlled: true,
                           builder: (context) {
-                            var orientation =
-                                MediaQuery.of(context).orientation;
                             return Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                 vertical: 20,
-                                horizontal:
-                                    orientation == Orientation.portrait
-                                        ? 25
-                                        : 60,
+                                horizontal: 25,
                               ),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
+                              decoration: BoxDecoration(
+                                color: isDark ? Colors.grey[900] : Colors.white,
+                                borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(35),
                                   topRight: Radius.circular(35),
                                 ),
                               ),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
+                                  Text(
+                                    "Font Size",
+                                    style: TextStyle(
+                                      color:
+                                          isDark ? Colors.white : TColor.text,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Slider(
+                                    activeColor: TColor.primary,
+                                    value: fontSize,
+                                    min: 12,
+                                    max: 40,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        fontSize = value;
+                                      });
                                     },
-                                    icon: Icon(Icons.close, color: TColor.text),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.text_decrease,
-                                        color: TColor.text,
-                                        size: 20,
-                                      ),
-                                      Expanded(
-                                        child: StatefulBuilder(
-                                          builder: (context, setState) {
-                                            return Slider(
-                                              activeColor: TColor.text,
-                                              inactiveColor: TColor.subTitle,
-                                              thumbColor: Colors.white,
-                                              min: 8.0,
-                                              max: 70.0,
-                                              value: fontSize,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  fontSize = value;
-                                                });
-                                                updateUi();
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.text_increase,
-                                        color: TColor.text,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Container(
-                                    height: 50,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 15,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: TColor.textbox,
-                                      border: Border.all(
-                                        color: Colors.black26,
-                                        width: 0.5,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: DropdownButton(
-                                      isExpanded: true,
-                                      hint: const Text("Font"),
-                                      underline: Container(),
-                                      items:
-                                          ["Font1", "Font2"].map((name) {
-                                            return DropdownMenuItem(
-                                              value: name,
-                                              child: Text(name),
-                                            );
-                                          }).toList(),
-                                      onChanged: (selectVal) {},
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.light_mode,
-                                        color: TColor.text,
-                                        size: 20,
-                                      ),
-                                      Expanded(
-                                        child: StatefulBuilder(
-                                          builder: (context, setState) {
-                                            return Slider(
-                                              activeColor: TColor.text,
-                                              inactiveColor: TColor.subTitle,
-                                              thumbColor: Colors.white,
-                                              min: 8.0,
-                                              max: 70.0,
-                                              value: fontSize,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  fontSize = value;
-                                                });
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.light_mode,
-                                        color: TColor.text,
-                                        size: 30,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          SystemChrome.setPreferredOrientations(
-                                            [
-                                              DeviceOrientation.portraitDown,
-                                              DeviceOrientation.portraitUp,
-                                            ],
-                                          );
-                                        },
-                                        padding: EdgeInsets.zero,
-                                        icon: Container(
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                orientation ==
-                                                        Orientation.portrait
-                                                    ? TColor.subTitle
-                                                    : Colors.transparent,
-                                            borderRadius: BorderRadius.circular(
-                                              30,
-                                            ),
-                                          ),
-                                          child: Icon(
-                                            Icons.stay_current_portrait,
-                                            color: TColor.text,
-                                            size: 30,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 15),
-                                      IconButton(
-                                        onPressed: () {
-                                          SystemChrome.setPreferredOrientations(
-                                            [
-                                              DeviceOrientation.landscapeLeft,
-                                              DeviceOrientation.landscapeRight,
-                                            ],
-                                          );
-                                        },
-                                        padding: EdgeInsets.zero,
-                                        icon: Container(
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                orientation ==
-                                                        Orientation.landscape
-                                                    ? TColor.subTitle
-                                                    : Colors.transparent,
-                                            borderRadius: BorderRadius.circular(
-                                              30,
-                                            ),
-                                          ),
-                                          child: Icon(
-                                            Icons.stay_current_landscape,
-                                            color: TColor.text,
-                                            size: 30,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                 ],
                               ),
@@ -265,7 +148,7 @@ class _BookReadingViewState extends State<BookReadingView> {
                           },
                         );
                       },
-                      icon: Icon(Icons.settings, color: TColor.primary),
+                      icon: Icon(Icons.text_fields, color: TColor.primary),
                     ),
                   ],
                 ),
@@ -273,145 +156,115 @@ class _BookReadingViewState extends State<BookReadingView> {
             ),
           ];
         },
-
-        body: Container(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  children: [
-                    Text(
-                      "Author: ",
-                      style: TextStyle(
-                        color: isDark ? Colors.white : TColor.text,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.asset(
+                      widget.imgPath,
+                      width: 120,
+                      height: 180,
+                      fit: BoxFit.cover,
+                      errorBuilder:
+                          (context, error, stackTrace) => Container(
+                            width: 120,
+                            height: 180,
+                            color: Colors.grey[300],
+                            child: const Icon(Icons.error),
+                          ),
                     ),
-                    Text(
-                      "Laylo Sayfiyeva",
-                      style: TextStyle(
-                        color: isDark ? Colors.white : TColor.text,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BookDetailRow(
+                          label: "Author",
+                          value: widget.creator,
+                          isDark: isDark,
+                        ),
+                        const SizedBox(height: 8),
+                        BookDetailRow(
+                          label: "Publication",
+                          value: widget.publicator,
+                          isDark: isDark,
+                        ),
+                        const SizedBox(height: 8),
+                        BookDetailRow(
+                          label: "Language",
+                          value: widget.language,
+                          isDark: isDark,
+                        ),
+                        const SizedBox(height: 8),
+                        BookDetailRow(
+                          label: "ISBN",
+                          value: widget.ISBN,
+                          isDark: isDark,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: isDark ? Colors.grey[900] : Colors.grey[100],
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BookDetailRow(
+                      label: "Category",
+                      value: widget.category,
+                      isDark: isDark,
+                    ),
+                    const SizedBox(height: 8),
+                    BookDetailRow(
+                      label: "Date",
+                      value: widget.date,
+                      isDark: isDark,
+                    ),
+                    const SizedBox(height: 8),
+                    BookDetailRow(
+                      label: "Format",
+                      value: widget.format,
+                      isDark: isDark,
+                    ),
+                    const SizedBox(height: 8),
+                    BookDetailRow(
+                      label: "Subject",
+                      value: widget.subject,
+                      isDark: isDark,
                     ),
                   ],
                 ),
               ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  children: [
-                    Text(
-                      "Publication: ",
-                      style: TextStyle(
-                        color: isDark ? Colors.white : TColor.text,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      "ShaqrPress OOO",
-                      style: TextStyle(
-                        color: isDark ? Colors.white : TColor.text,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
+              const SizedBox(height: 20),
+              Text(
+                "Description",
+                style: TextStyle(
+                  color: isDark ? Colors.white : TColor.text,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  children: [
-                    Text(
-                      "Language: ",
-                      style: TextStyle(
-                        color: isDark ? Colors.white : TColor.text,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      "Uzbek",
-                      style: TextStyle(
-                        color: isDark ? Colors.white : TColor.text,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  children: [
-                    Text(
-                      "ISBN: ",
-                      style: TextStyle(
-                        color: isDark ? Colors.white : TColor.text,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      "1290449SL",
-                      style: TextStyle(
-                        color: isDark ? Colors.white : TColor.text,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Row(
-                  children: [
-                    Text(
-                      "Country: ",
-                      style: TextStyle(
-                        color: isDark ? Colors.white : TColor.text,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      "Uzbekistan",
-                      style: TextStyle(
-                        color: isDark ? Colors.white : TColor.text,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
+              const SizedBox(height: 10),
               SelectableText(
-                """
-SHORTLY AFTER DARK ON THE AFTERNOON OF DECEMBER 5, 1997, an urgent message was relayed to a man named Yuri Trush at his home in Luchegorsk, a mid-sized mining town in Primorye Territory in Russia’s Far East, not far from the Chinese border. Primorye (Pri-mor-
-ya) is, among other things, the last stronghold of the Siberian tiger, and the official on the line had some disturbing news: a man had been attacked near Sobolonye, a small logging community located in the deep forest, sixty miles northeast of Luchegorsk. Yuri Trush was the squad leader of an Inspection Tiger unit, one of six in the territory whose purpose was to investigate forest crimes, specifically those involving tigers.
-
-     Because poachers were often involved, these included tiger attacks. As a result, this situation—whatever it might entail—was now Trush’s problem and, right away, he began preparing for the trip to Sobolonye.
-
-     Early the following morning—Saturday—Yuri Trush, along with his squadmates Alexander Gorborukov and Sasha Lazurenko, piled into a
-surplus army truck and rumbled north. Dressed in insulated fatigues and camouflage, and armed with knives, pistols, and semiautomatic rifles, the Tigers, as these inspectors are sometimes called, looked less like game wardens than like some kind of wilderness SWAT team. Their twenty-year-old truck was nicknamed a Kung, and it was the Russian army’s four-ton equivalent to the Unimog and the Humvee. Gasoline-powered,
-with a winch, four-wheel-drive, and wide waist-high tires, it is a popular vehicle in Primorye’s hinterlands.
-
-     Along with a gun rack and brackets for
-extra fuel cans, this one had been modified to accommodate makeshift bunks, and was stocked with enough food to last four men a week.
-""",
+                widget.description,
                 style: TextStyle(
                   color: isDark ? Colors.white : TColor.text,
                   fontSize: fontSize,
+                  height: 1.5,
                 ),
               ),
             ],
@@ -423,5 +276,44 @@ extra fuel cans, this one had been modified to accommodate makeshift bunks, and 
 
   void updateUi() {
     setState(() {});
+  }
+}
+
+class BookDetailRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool isDark;
+
+  const BookDetailRow({
+    Key? key,
+    required this.label,
+    required this.value,
+    required this.isDark,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "$label: ",
+          style: TextStyle(
+            color: isDark ? Colors.white : TColor.text,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            style: TextStyle(
+              color: isDark ? Colors.white70 : TColor.text.withOpacity(0.8),
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -1,6 +1,7 @@
-import 'package:liliya/common/color_extenstion.dart';
-import 'package:liliya/view/main_tab/main_tab_view.dart';
 import 'package:flutter/material.dart';
+
+import '../../common/color_extenstion.dart';
+import '../main_tab/main_tab_view.dart';
 
 class HelpUsView extends StatefulWidget {
   const HelpUsView({super.key});

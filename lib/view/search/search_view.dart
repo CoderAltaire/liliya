@@ -1,12 +1,12 @@
-import 'package:liliya/view/book_reading/book_reading_view.dart';
-import 'package:liliya/view/search/search_fiter_view.dart';
-import 'package:liliya/view/search/search_force_view.dart';
+import 'package:com.example.liliya/view/search/search_fiter_view.dart';
+import 'package:com.example.liliya/view/search/search_force_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/color_extenstion.dart';
 import '../../common_widget/history_row.dart';
 import '../../common_widget/search_grid_cell.dart';
 import '../../common/extenstion.dart';
+import '../book_reading/book_reading_view.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -208,13 +208,14 @@ class _SearchViewState extends State<SearchView> {
                 ),
                 itemCount: searchArr.length,
                 itemBuilder: (context, index) {
-                  var sObj = searchArr[index] as Map? ?? {};
+                  var sObj = searchArr[index];
+
                   return InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BookReadingView(bObj: sObj),
+                          builder: (context) => BookReadingView(publicator: sObj['name'],title: 'Title',language: "Uz",ISBN: "ISBN",imgPath: sObj['img'],description: "simple description",creator: "No one",Country: "Uzbekistan", category: '', category_id: '', id: '', contributor: '', relation: '', coverage: '', date: '', format: '', type: '', subject: '',),
                         ),
                       );
                     },

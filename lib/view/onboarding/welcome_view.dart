@@ -1,9 +1,9 @@
-import 'package:liliya/view/login/sign_in_view.dart';
-import 'package:liliya/view/login/sign_up_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/color_extenstion.dart';
 import '../../common_widget/round_button.dart';
+import '../login/sign_in_view.dart';
+import '../login/sign_up_view.dart';
 
 class WelcomeView extends StatefulWidget {
   const WelcomeView({super.key});
@@ -46,11 +46,11 @@ class _WelcomeViewState extends State<WelcomeView> {
               ),
               RoundButton(
                 title: "Sign in",
-                onPressed: () {
+                onPressed: (){
                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SignInView ()));
+                          builder: (context) => const SignInView()));
 
                 },
               ),
@@ -61,7 +61,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                 title: "Sign up",
                 onPressed: () {
 
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpView() ));
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const SignUpView() ),(route) => false,);
 
                 },
               ),

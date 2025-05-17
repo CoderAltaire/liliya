@@ -4,8 +4,17 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../common/color_extenstion.dart';
 
 class BestSellerCell extends StatelessWidget {
-  final Map bObj;
-  const BestSellerCell({super.key, required this.bObj});
+  final String title;
+final String creator;
+final String publicator;
+final String language;
+final String ISBN;
+final String Country;
+final String description;
+final String imgPath;
+
+
+  const BestSellerCell({super.key,  required this.publicator, required this.language, required this.ISBN, required this.Country, required this.description, required this.imgPath, required this.title, required this.creator, });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +40,7 @@ class BestSellerCell extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.asset(
-                  bObj["img"].toString(),
+                  imgPath,
                   width: media.width * 0.32,
                   height: media.width * 0.50,
                   fit: BoxFit.cover,
@@ -42,7 +51,7 @@ class BestSellerCell extends StatelessWidget {
               height: 15,
             ),
             Text(
-              bObj["name"].toString(),
+              title,
               maxLines: 3,
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -54,7 +63,7 @@ class BestSellerCell extends StatelessWidget {
               height: 8,
             ),
             Text(
-              bObj["author"].toString(),
+              creator,
               maxLines: 1,
               textAlign: TextAlign.left,
               style: TextStyle(
@@ -68,7 +77,7 @@ class BestSellerCell extends StatelessWidget {
             IgnorePointer(
               ignoring: true,
               child: RatingBar.builder(
-                initialRating: double.tryParse(bObj["rating"].toString()) ?? 1,
+                initialRating: 5,
                 minRating: 1,
                 direction: Axis.horizontal,
                 allowHalfRating: true,
